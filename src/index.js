@@ -1,7 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-/*import  App  from "./components/App";
- import  Home  from "./components/home";
+// import{createstore} from 'redux'
+import { createStore } from 'redux'
+
+import  App  from "./components/App";
+/*  import  Home  from "./components/home";
   import  About  from "./components/about";
 
 // import  About  from "./";
@@ -24,33 +27,33 @@ ReactDOM.render(
   ,
   */
 
-  class App extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      counter: 0
+  function reducer(state,action){
+    switch (action.type){
+      case 'increment':
+      return state = state+ action.payload;
+      break;
+      case  'decrement':
+      return state = state -action.payload;
+      break;
+      default :
+      return state
     }
-    this.addOne = this.addOne.bind(this)
   }
-  
-  addOne() {
-    this.setState({
-      counter: this.state.counter + 1
-    })
-  }
-  
-  render() {
-    return (
-      <div>
-        <button
-          onClick={ this.addOne }>
-          Increment
-        </button>
-        { this.state.counter }
-      </div>
-    )
-  }
-}
+
+let store = createStore (reducer,1)
+
+store.subscribe(()=>
+  console.log("store updated"+store.getState()
+  )
+
+)
+store.dispatch({type:'increment',
+                payload: 100
+})
+store.dispatch({type:'decrement',
+                payload: 100
+})
+
 
 ReactDOM.render(
 <App/>,
